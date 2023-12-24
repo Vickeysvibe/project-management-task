@@ -16,7 +16,10 @@ export default async function ProjApi(req, res) {
     res.json(ProjectDoc);
   }
   if (method === "GET") {
-    const projectDoc = await Projects.find();
-    res.json(projectDoc);
+    if (req.query?.id) {
+      res.json(await Projects.findOne({ _id: req.query.id }));
+    } else {
+      res.json(await Projects.find());
+    }
   }
 }
